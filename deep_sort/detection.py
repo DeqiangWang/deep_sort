@@ -14,6 +14,10 @@ class Detection(object):
         Detector confidence score.
     feature : array_like
         A feature vector that describes the object contained in this image.
+    mask : array_like
+        A bool array of shape [height, width, 1].
+    frame_id : int
+        Id of the current frame.
 
     Attributes
     ----------
@@ -23,13 +27,19 @@ class Detection(object):
         Detector confidence score.
     feature : ndarray | NoneType
         A feature vector that describes the object contained in this image.
+    mask : array_like
+        A bool array of shape [height, width, 1].
+    frame_id : int
+        Id of the current frame.
 
     """
 
-    def __init__(self, tlwh, confidence, feature):
+    def __init__(self, tlwh, confidence, feature, mask, frame_id):
         self.tlwh = np.asarray(tlwh, dtype=np.float)
         self.confidence = float(confidence)
         self.feature = np.asarray(feature, dtype=np.float32)
+        self.mask = mask
+        self.frame_id = frame_id
 
     def to_tlbr(self):
         """Convert bounding box to format `(min x, min y, max x, max y)`, i.e.,
